@@ -88,12 +88,6 @@ public abstract class CSVFileParser implements FileParser {
         }
     }
 
-    private void trimStrings(String[] strings) {
-        for (int index = 0; index < strings.length; index++) {
-            strings[index] = strings[index].trim();
-        }
-    }
-
     /**
      * Saves all entries located in an OBFTable into a file.
      *
@@ -122,13 +116,6 @@ public abstract class CSVFileParser implements FileParser {
 
         public String[] getCategories() {
             return catNames.toArray(new String[catNames.size()]);
-        }
-
-        public void addCategories(String... newCats) {
-            for (String cat : newCats) {
-                catNames.add(cat);
-                categories.put(cat, new ArrayList<String>());
-            }
         }
 
         public String getItem(String category, int index) {
