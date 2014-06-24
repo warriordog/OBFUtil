@@ -5,4 +5,5 @@ public enum TargetType {
     CLASS,
     METHOD,
     FIELD
+    //TODO: Add comment and param?
 }

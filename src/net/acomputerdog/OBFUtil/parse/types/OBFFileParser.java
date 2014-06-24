@@ -6,7 +6,10 @@ import net.acomputerdog.OBFUtil.parse.FileParser;
 import net.acomputerdog.OBFUtil.table.OBFTable;
 import net.acomputerdog.core.file.TextFileReader;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class OBFFileParser implements FileParser {

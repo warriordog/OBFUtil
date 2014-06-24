@@ -1,12 +1,15 @@
 package net.acomputerdog.OBFUtil.parse.types;
 
-import net.acomputerdog.OBFUtil.deobfuscator.TargetType;
 import net.acomputerdog.OBFUtil.parse.FileParser;
 import net.acomputerdog.OBFUtil.table.OBFTable;
 import net.acomputerdog.core.file.TextFileReader;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public abstract class CSVFileParser implements FileParser {

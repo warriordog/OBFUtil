@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DirectOBFTable implements OBFTable{
+public class DirectOBFTable implements OBFTable {
     private final Map<String, String> packageMap = new HashMap<String, String>();
     private final List<String> packageList = new ArrayList<String>();
     private final Map<String, String> classMap = new HashMap<String, String>();
