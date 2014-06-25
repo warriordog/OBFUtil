@@ -9,9 +9,17 @@ import net.acomputerdog.core.file.TextFileReader;
 import java.io.*;
 import java.util.regex.Pattern;
 
+/**
+ * Reads and writes obfuscation data to an MCP .srg file.
+ */
 public class SRGFileParser implements FileParser {
     private final String side;
 
+    /**
+     * Creates a new SRGFileParser
+     *
+     * @param side The side to read.  Should be "C" or "S" (client/server).  Unsided entries are always read, but will be saved as as this.
+     */
     public SRGFileParser(String side) {
         this.side = side;
     }
