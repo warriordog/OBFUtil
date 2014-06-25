@@ -10,13 +10,31 @@ import java.io.*;
 import java.util.regex.Pattern;
 
 /**
- * Reads and write obfuscation mappings to a .obf file.
+ * Reads and write obfuscation data to an SOBF (Sided OBFuscation) file.  This format is an adaption of the OBF format to support sides defined in MCP files.
  * General format is:
- *   # Comment type 1
- *   // Comment type 2
- *   <TYPE>:<OBF>=<DEOBF>
+ * # Comment type 1
+ * // Comment type 2
+ * <TYPE>.<SIDE>:<OBF>=<DEOBF>
  */
-public class OBFFileParser implements FileParser {
+public class SOBFFileParser implements FileParser {
+    private final int side;
+
+    /**
+     * Creates a new SOBFFileParser.
+     *
+     * @param side The side to use.
+     */
+    public SOBFFileParser(int side) {
+        this.side = side;
+    }
+
+    /**
+     * Loads all entries located in a File into an OBFTable.
+     *
+     * @param file      The file to load from.  Must exist.
+     * @param table     The table to write to.
+     * @param overwrite If true overwrite existing mappings.
+     */
     @Override
     public void loadEntries(File file, OBFTable table, boolean overwrite) throws IOException {
         TextFileReader reader = null;
@@ -32,7 +50,12 @@ public class OBFFileParser implements FileParser {
                 if (typeParts.length < 2) {
                     throw new FileFormatException("Format error on line " + line + ": \"" + str + "\"");
                 }
-                TargetType type = TargetType.valueOf(typeParts[0]);
+                String[] sideParts = typeParts[0].split(Pattern.quote("."));
+                if (sideParts.length < 2) {
+                    throw new FileFormatException("Format error on line " + line + ": \"" + str + "\"");
+                }
+                TargetType type = TargetType.valueOf(sideParts[0]);
+                int side = Integer.parseInt(sideParts[1]);
                 if (type == null) {
                     throw new FileFormatException("Illegal target type on line " + line + ": \"" + typeParts[0] + "\"");
                 }
@@ -40,7 +63,7 @@ public class OBFFileParser implements FileParser {
                 if (obfParts.length < 2) {
                     throw new FileFormatException("Format error on line " + line + ": \"" + str + "\"");
                 }
-                if (overwrite || !table.hasType(type, obfParts[0])) {
+                if ((overwrite || !table.hasType(type, obfParts[0])) && (side == this.side)) {
                     table.addType(type, obfParts[0], obfParts[1]);
                 }
             }
@@ -51,6 +74,13 @@ public class OBFFileParser implements FileParser {
         }
     }
 
+    /**
+     * Saves all entries located in an OBFTable into a file.
+     *
+     * @param file  The file to write to.  Must exist.
+     * @param table The table to read from
+     * @throws java.io.IOException
+     */
     @Override
     public void storeEntries(File file, OBFTable table) throws IOException {
         Writer out = null;
@@ -60,6 +90,8 @@ public class OBFFileParser implements FileParser {
                 for (String obf : table.getAllType(type)) {
                     String deobf = table.getType(type, obf);
                     out.write(type.name());
+                    out.write(".");
+                    out.write(this.side);
                     out.write(":");
                     out.write(obf);
                     out.write("=");
