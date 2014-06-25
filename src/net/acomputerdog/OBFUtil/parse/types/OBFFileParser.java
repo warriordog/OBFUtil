@@ -6,10 +6,7 @@ import net.acomputerdog.OBFUtil.parse.FileParser;
 import net.acomputerdog.OBFUtil.table.OBFTable;
 import net.acomputerdog.core.file.TextFileReader;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.regex.Pattern;
 
 public class OBFFileParser implements FileParser {
@@ -54,7 +51,7 @@ public class OBFFileParser implements FileParser {
 
     @Override
     public void storeEntries(File file, OBFTable table) throws IOException {
-        BufferedWriter out = null;
+        Writer out = null;
         try {
             out = new BufferedWriter(new FileWriter(file));
             for (String str : table.getAllPackages()) {

@@ -8,9 +8,19 @@ import java.io.File;
 import java.io.IOException;
 
 public class FileConverter {
-    public static void convert(FileParser in, FileParser out, File file) throws IOException {
+
+    /**
+     * Converts an obfuscation table in one format to another.
+     *
+     * @param in      The input FileParser
+     * @param out     The output FileParser
+     * @param inFile  The input file
+     * @param outFile The output file
+     * @throws IOException If an IO error occurs
+     */
+    public static void convert(FileParser in, FileParser out, File inFile, File outFile) throws IOException {
         OBFTable table = new DirectOBFTable();
-        in.loadEntries(file, table, true);
-        out.storeEntries(file, table);
+        in.loadEntries(inFile, table, true);
+        out.storeEntries(outFile, table);
     }
 }

@@ -4,8 +4,7 @@ import net.acomputerdog.OBFUtil.parse.FileParser;
 import net.acomputerdog.OBFUtil.table.OBFTable;
 import net.acomputerdog.core.file.TextFileReader;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,6 +69,30 @@ public abstract class CSVFileParser implements FileParser {
         }
     }
 
+    /**
+     * Saves all entries located in an OBFTable into a file.
+     *
+     * @param file  The file to write to.  Must exist.
+     * @param table The table to read from
+     * @throws java.io.IOException
+     */
+    @Override
+    public void storeEntries(File file, OBFTable table) throws IOException {
+        Writer out = null;
+        try {
+            out = new BufferedWriter(new FileWriter(file));
+
+            CSVFile csv = this.readCSVFromTable(file, table);
+            out.write(csv.toString());
+
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
+
+
     private boolean isLineEmpty(String line) {
         if (line.isEmpty()) {
             return true;
@@ -86,18 +109,6 @@ public abstract class CSVFileParser implements FileParser {
             }
             return true;
         }
-    }
-
-    /**
-     * Saves all entries located in an OBFTable into a file.
-     *
-     * @param file  The file to write to.  Must exist.
-     * @param table The table to read from
-     * @throws java.io.IOException
-     */
-    @Override
-    public void storeEntries(File file, OBFTable table) throws IOException {
-        //todo: implement
     }
 
     public static class CSVFile {
@@ -163,25 +174,26 @@ public abstract class CSVFileParser implements FileParser {
             }
         }
 
-        public void printCSV() {
-            //todo rewrite to output to string/stream
-            System.out.println(mergeArray(getCategories()));
+        @Override
+        public String toString() {
+            StringBuilder builder = new StringBuilder();
+            mergeArray(getCategories(), builder);
             int row = 0;
             while (row < size()) {
-                System.out.println(mergeArray(getRow(row)));
+                builder.append("\n");
+                mergeArray(getRow(row), builder);
                 row++;
             }
+            return builder.toString();
         }
 
-        private String mergeArray(String[] strings) {
-            StringBuilder builder = new StringBuilder();
+        private void mergeArray(String[] strings, StringBuilder builder) {
             for (int index = 0; index < strings.length; index++) {
                 builder.append(strings[index]);
                 if (index < strings.length - 1) {
                     builder.append(",");
                 }
             }
-            return builder.toString();
         }
     }
 }
