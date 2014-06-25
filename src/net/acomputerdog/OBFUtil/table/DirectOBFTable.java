@@ -1,12 +1,15 @@
 package net.acomputerdog.OBFUtil.table;
 
-import net.acomputerdog.OBFUtil.deobfuscator.TargetType;
+import net.acomputerdog.OBFUtil.util.TargetType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A simple, direct implementation of OBFTable.  Uses HashMaps and ArrayLists to store data.
+ */
 public class DirectOBFTable implements OBFTable {
     private final Map<String, String> packageMap = new HashMap<String, String>();
     private final List<String> packageList = new ArrayList<String>();
@@ -201,30 +204,6 @@ public class DirectOBFTable implements OBFTable {
         for (String obfName : methodList) {
             if (overwrite || !table.hasMethod(obfName)) {
                 table.addMethod(obfName, methodMap.get(obfName));
-            }
-        }
-    }
-
-    @Override
-    public void readFromTable(OBFTable table, boolean overwrite) {
-        for (String obfName : table.getAllPackages()) {
-            if (overwrite || !this.hasPackage(obfName)) {
-                this.addPackage(obfName, table.getPackage(obfName));
-            }
-        }
-        for (String obfName : table.getAllClasses()) {
-            if (overwrite || !this.hasClass(obfName)) {
-                this.addClass(obfName, table.getClass(obfName));
-            }
-        }
-        for (String obfName : table.getAllFields()) {
-            if (overwrite || !this.hasField(obfName)) {
-                this.addField(obfName, table.getField(obfName));
-            }
-        }
-        for (String obfName : table.getAllMethods()) {
-            if (overwrite || !this.hasMethod(obfName)) {
-                this.addMethod(obfName, table.getMethod(obfName));
             }
         }
     }

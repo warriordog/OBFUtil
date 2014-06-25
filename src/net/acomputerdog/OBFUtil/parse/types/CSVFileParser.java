@@ -11,11 +11,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+/**
+ * Reads and writes obfuscation mappings to a .csv file.  Due to variations in CSV formats, this class is abstract so that subclasses can identify the correct data to read.
+ */
 public abstract class CSVFileParser implements FileParser {
 
-    public abstract void writeCSVToTable(File source, CSVFile csv, OBFTable table);
+    /**
+     * Writes the data in a CSVFile to an OBFTable
+     *
+     * @param source The file where the data originated from.
+     * @param csv    The CSVFile to read from
+     * @param table  The OBFTable to write to.
+     */
+    protected abstract void writeCSVToTable(File source, CSVFile csv, OBFTable table);
 
-    public abstract CSVFile readCSVFromTable(File source, OBFTable table);
+    /**
+     * Creates a CSVFile representing the data in an OBFTable
+     *
+     * @param source The file where the data originated from.
+     * @param table  The table containing the data.
+     * @return Return a CSVFile representing the data in the OBFTable
+     */
+    protected abstract CSVFile readCSVFromTable(File source, OBFTable table);
 
     /**
      * Loads all entries located in a File into an OBFTable.

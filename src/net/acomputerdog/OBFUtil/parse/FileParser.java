@@ -5,6 +5,9 @@ import net.acomputerdog.OBFUtil.table.OBFTable;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Reads and write obfuscation mappings to a file.
+ */
 public interface FileParser {
 
     /**

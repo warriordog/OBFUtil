@@ -1,13 +1,16 @@
 package net.acomputerdog.OBFUtil.parse.types;
 
-import net.acomputerdog.OBFUtil.deobfuscator.TargetType;
 import net.acomputerdog.OBFUtil.parse.FileParser;
 import net.acomputerdog.OBFUtil.table.DirectOBFTable;
 import net.acomputerdog.OBFUtil.table.OBFTable;
+import net.acomputerdog.OBFUtil.util.TargetType;
 
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Reads and writes obfuscation mappings to an MCP format .csv file.  MCP format is searge,name,side,desc as categories.
+ */
 public class MCPCSVFileParser extends CSVFileParser {
     private static final int OBFNAME_INDEX = 0;
     private static final int DEOBFNAME_INDEX = 1;

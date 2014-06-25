@@ -2,6 +2,9 @@ package net.acomputerdog.OBFUtil.parse;
 
 import java.io.IOException;
 
+/**
+ * Indicates that an IOException was caused due to an incorrect format in a file.
+ */
 public class FileFormatException extends IOException {
     /**
      * Constructs an {@code IOException} with {@code null}

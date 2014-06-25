@@ -1,14 +1,17 @@
 package net.acomputerdog.OBFUtil.parse.types;
 
-import net.acomputerdog.OBFUtil.deobfuscator.TargetType;
 import net.acomputerdog.OBFUtil.parse.FileFormatException;
 import net.acomputerdog.OBFUtil.parse.FileParser;
 import net.acomputerdog.OBFUtil.table.OBFTable;
+import net.acomputerdog.OBFUtil.util.TargetType;
 import net.acomputerdog.core.file.TextFileReader;
 
 import java.io.*;
 import java.util.regex.Pattern;
 
+/**
+ * Reads and write obfuscation mappings to a .obf file.
+ */
 public class OBFFileParser implements FileParser {
     @Override
     public void loadEntries(File file, OBFTable table, boolean overwrite) throws IOException {

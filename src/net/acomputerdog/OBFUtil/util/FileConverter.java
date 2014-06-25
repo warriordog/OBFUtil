@@ -7,6 +7,9 @@ import net.acomputerdog.OBFUtil.table.OBFTable;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Utility class that allows converting a file from one type to another.
+ */
 public class FileConverter {
 
     /**
