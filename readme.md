@@ -1,0 +1,1 @@
+OBFUtil is a lightweight utility intended for use in applications such as deobfuscators or runtime injection into obfuscated code.  It maintains mappings for packages, classes, fields, and methods, and includes the ability to import/export various obfuscation formats.
