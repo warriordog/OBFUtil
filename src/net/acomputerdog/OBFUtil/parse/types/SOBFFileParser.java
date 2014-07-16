@@ -37,6 +37,9 @@ public class SOBFFileParser implements FileParser {
      */
     @Override
     public void loadEntries(File file, OBFTable table, boolean overwrite) throws IOException {
+        if (file == null) {
+            throw new IllegalArgumentException("File must not be null!");
+        }
         TextFileReader reader = null;
         try {
             reader = new TextFileReader(file);
@@ -83,6 +86,9 @@ public class SOBFFileParser implements FileParser {
      */
     @Override
     public void storeEntries(File file, OBFTable table) throws IOException {
+        if (file == null) {
+            throw new IllegalArgumentException("File must not be null!");
+        }
         Writer out = null;
         try {
             out = new BufferedWriter(new FileWriter(file));

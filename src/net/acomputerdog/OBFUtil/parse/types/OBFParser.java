@@ -22,6 +22,9 @@ import java.util.regex.Pattern;
 public class OBFParser implements FileParser, URLParser {
     @Override
     public void loadEntries(File file, OBFTable table, boolean overwrite) throws IOException {
+        if (file == null) {
+            throw new IllegalArgumentException("File must not be null!");
+        }
         TextFileReader reader = null;
         try {
             reader = new TextFileReader(file);
@@ -35,6 +38,9 @@ public class OBFParser implements FileParser, URLParser {
 
     @Override
     public void storeEntries(File file, OBFTable table) throws IOException {
+        if (file == null) {
+            throw new IllegalArgumentException("File must not be null!");
+        }
         Writer out = null;
         try {
             out = new BufferedWriter(new FileWriter(file));
@@ -55,6 +61,9 @@ public class OBFParser implements FileParser, URLParser {
      */
     @Override
     public void loadEntries(URL url, OBFTable table, boolean overwrite) throws IOException {
+        if (url == null) {
+            throw new IllegalArgumentException("URL must not be null!");
+        }
         URLConnection con = url.openConnection();
         con.connect();
         if (!con.getDoInput()) {
@@ -84,6 +93,9 @@ public class OBFParser implements FileParser, URLParser {
      */
     @Override
     public void storeEntries(URL url, OBFTable table) throws IOException {
+        if (url == null) {
+            throw new IllegalArgumentException("URL must not be null!");
+        }
         URLConnection con = url.openConnection();
         con.connect();
         if (!con.getDoOutput()) {
