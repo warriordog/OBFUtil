@@ -49,10 +49,10 @@ public class MCPCSVFileParser extends CSVFileParser {
     public CSVFile readCSVFromTable(File source, OBFTable table) {
         CSVFile csv = new CSVFile();
 
-        String[] obfs = table.getAllType(type);
+        String[] obfs = table.getAllTypeObf(type);
         for (String obf : obfs) {
             csv.addItem("searge", obf);
-            csv.addItem("name", table.getType(type, obf));
+            csv.addItem("name", table.deobfType(type, obf));
             csv.addItem("side", Integer.toString(ignoreSides ? 0 : side));
             csv.addItem("desc", "");
         }
@@ -79,20 +79,20 @@ public class MCPCSVFileParser extends CSVFileParser {
             System.exit(-1);
         }
         System.out.println("Packages:");
-        for (String str : table.getAllPackages()) {
-            System.out.println("   " + str + " = " + table.getPackage(str));
+        for (String str : table.getAllPackagesObf()) {
+            System.out.println("   " + str + " = " + table.deobfPackage(str));
         }
         System.out.println("Classes:");
-        for (String str : table.getAllClasses()) {
-            System.out.println("   " + str + " = " + table.getClass(str));
+        for (String str : table.getAllClassesObf()) {
+            System.out.println("   " + str + " = " + table.deobfClass(str));
         }
         System.out.println("Fields:");
-        for (String str : table.getAllFields()) {
-            System.out.println("   " + str + " = " + table.getField(str));
+        for (String str : table.getAllFieldsObf()) {
+            System.out.println("   " + str + " = " + table.deobfField(str));
         }
         System.out.println("Methods:");
-        for (String str : table.getAllMethods()) {
-            System.out.println("   " + str + " = " + table.getMethod(str));
+        for (String str : table.getAllMethodsObf()) {
+            System.out.println("   " + str + " = " + table.deobfMethod(str));
         }
 
     }

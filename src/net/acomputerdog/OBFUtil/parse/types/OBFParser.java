@@ -124,7 +124,7 @@ public class OBFParser implements FileParser, URLParser {
             if (obfParts.length < 2) {
                 throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
             }
-            if (overwrite || !table.hasType(type, obfParts[0])) {
+            if (overwrite || !table.hasTypeDeobf(type, obfParts[0])) {
                 table.addType(type, obfParts[0], obfParts[1]);
             }
         }
@@ -133,8 +133,8 @@ public class OBFParser implements FileParser, URLParser {
 
     private void writeTable(Writer out, OBFTable table) throws IOException {
         for (TargetType type : TargetType.values()) {
-            for (String obf : table.getAllType(type)) {
-                String deobf = table.getType(type, obf);
+            for (String obf : table.getAllTypeObf(type)) {
+                String deobf = table.deobfType(type, obf);
                 out.write(type.name());
                 out.write(":");
                 out.write(obf);

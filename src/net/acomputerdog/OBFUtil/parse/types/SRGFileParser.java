@@ -55,7 +55,7 @@ public class SRGFileParser implements FileParser {
                     String deobf = sections[3].replaceAll(Pattern.quote("/"), ".").concat(" ").concat(sections[4].replaceAll(Pattern.quote("/"), "."));
                     String side = (sections.length >= 6) ? sections[5].replaceAll(Pattern.quote("#"), "") : "";
 
-                    if ((overwrite || !table.hasType(type, obf)) && (side.isEmpty() || side.equals(this.side))) {
+                    if ((overwrite || !table.hasTypeDeobf(type, obf)) && (side.isEmpty() || side.equals(this.side))) {
                         table.addType(type, obf, deobf);
                     }
                 } else {
@@ -63,7 +63,7 @@ public class SRGFileParser implements FileParser {
                     String deobf = sections[2].replaceAll(Pattern.quote("/"), ".");
                     String side = (sections.length >= 4) ? sections[3].replaceAll(Pattern.quote("#"), "") : "";
 
-                    if ((overwrite || !table.hasType(type, obf)) && (side.isEmpty() || side.equals(this.side))) {
+                    if ((overwrite || !table.hasTypeDeobf(type, obf)) && (side.isEmpty() || side.equals(this.side))) {
                         table.addType(type, obf, deobf);
                     }
                 }
@@ -89,8 +89,8 @@ public class SRGFileParser implements FileParser {
         try {
             out = new BufferedWriter(new FileWriter(file));
             for (TargetType type : TargetType.values()) {
-                for (String obf : table.getAllType(type)) {
-                    String deobf = table.getType(type, obf);
+                for (String obf : table.getAllTypeObf(type)) {
+                    String deobf = table.deobfType(type, obf);
                     out.write(getPrefix(type));
                     out.write(": ");
                     out.write(obf);
