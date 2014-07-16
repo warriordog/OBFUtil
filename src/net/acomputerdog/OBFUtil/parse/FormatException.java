@@ -5,12 +5,12 @@ import java.io.IOException;
 /**
  * Indicates that an IOException was caused due to an incorrect format in a file.
  */
-public class FileFormatException extends IOException {
+public class FormatException extends IOException {
     /**
      * Constructs an {@code IOException} with {@code null}
      * as its error detail message.
      */
-    public FileFormatException() {
+    public FormatException() {
         super();
     }
 
@@ -20,7 +20,7 @@ public class FileFormatException extends IOException {
      * @param message The detail message (which is saved for later retrieval
      *                by the {@link #getMessage()} method)
      */
-    public FileFormatException(String message) {
+    public FormatException(String message) {
         super(message);
     }
 
@@ -39,7 +39,7 @@ public class FileFormatException extends IOException {
      *                and indicates that the cause is nonexistent or unknown.)
      * @since 1.6
      */
-    public FileFormatException(String message, Throwable cause) {
+    public FormatException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -55,7 +55,7 @@ public class FileFormatException extends IOException {
      *              and indicates that the cause is nonexistent or unknown.)
      * @since 1.6
      */
-    public FileFormatException(Throwable cause) {
+    public FormatException(Throwable cause) {
         super(cause);
     }
 }

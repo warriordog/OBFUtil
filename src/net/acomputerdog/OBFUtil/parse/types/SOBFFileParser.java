@@ -1,7 +1,7 @@
 package net.acomputerdog.OBFUtil.parse.types;
 
-import net.acomputerdog.OBFUtil.parse.FileFormatException;
 import net.acomputerdog.OBFUtil.parse.FileParser;
+import net.acomputerdog.OBFUtil.parse.FormatException;
 import net.acomputerdog.OBFUtil.table.OBFTable;
 import net.acomputerdog.OBFUtil.util.TargetType;
 import net.acomputerdog.core.file.TextFileReader;
@@ -48,20 +48,20 @@ public class SOBFFileParser implements FileParser {
                 }
                 String[] typeParts = str.split(Pattern.quote(":"));
                 if (typeParts.length < 2) {
-                    throw new FileFormatException("Format error on line " + line + ": \"" + str + "\"");
+                    throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
                 }
                 String[] sideParts = typeParts[0].split(Pattern.quote("."));
                 if (sideParts.length < 2) {
-                    throw new FileFormatException("Format error on line " + line + ": \"" + str + "\"");
+                    throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
                 }
                 TargetType type = TargetType.valueOf(sideParts[0]);
                 int side = Integer.parseInt(sideParts[1]);
                 if (type == null) {
-                    throw new FileFormatException("Illegal target type on line " + line + ": \"" + typeParts[0] + "\"");
+                    throw new FormatException("Illegal target type on line " + line + ": \"" + typeParts[0] + "\"");
                 }
                 String[] obfParts = typeParts[1].split(Pattern.quote("="));
                 if (obfParts.length < 2) {
-                    throw new FileFormatException("Format error on line " + line + ": \"" + str + "\"");
+                    throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
                 }
                 if ((overwrite || !table.hasType(type, obfParts[0])) && (side == this.side)) {
                     table.addType(type, obfParts[0], obfParts[1]);

@@ -1,7 +1,7 @@
 package net.acomputerdog.OBFUtil.parse.types;
 
-import net.acomputerdog.OBFUtil.parse.FileFormatException;
 import net.acomputerdog.OBFUtil.parse.FileParser;
+import net.acomputerdog.OBFUtil.parse.FormatException;
 import net.acomputerdog.OBFUtil.table.OBFTable;
 import net.acomputerdog.OBFUtil.util.TargetType;
 import net.acomputerdog.core.file.TextFileReader;
@@ -41,15 +41,15 @@ public class SRGFileParser implements FileParser {
                 line++;
                 String[] sections = str.split(Pattern.quote(" "));
                 if (sections.length < 3) {
-                    throw new FileFormatException("Not enough sections on line " + line + ": \"" + str + "\"");
+                    throw new FormatException("Not enough sections on line " + line + ": \"" + str + "\"");
                 }
                 TargetType type = TargetType.getType(sections[0].replaceAll(Pattern.quote(":"), ""));
                 if (type == null) {
-                    throw new FileFormatException("Illegal target type on line " + line + ": \"" + sections[0] + "\"");
+                    throw new FormatException("Illegal target type on line " + line + ": \"" + sections[0] + "\"");
                 }
                 if (type == TargetType.METHOD) {
                     if (sections.length < 5) {
-                        throw new FileFormatException("Not enough sections on line " + line + ": \"" + str + "\"");
+                        throw new FormatException("Not enough sections on line " + line + ": \"" + str + "\"");
                     }
                     String obf = sections[1].replaceAll(Pattern.quote("/"), ".").concat(" ").concat(sections[2].replaceAll(Pattern.quote("/"), "."));
                     String deobf = sections[3].replaceAll(Pattern.quote("/"), ".").concat(" ").concat(sections[4].replaceAll(Pattern.quote("/"), "."));
