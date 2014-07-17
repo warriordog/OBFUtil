@@ -3,7 +3,7 @@ package net.acomputerdog.OBFUtil.table;
 import net.acomputerdog.OBFUtil.util.TargetType;
 import net.acomputerdog.OBFUtil.util.TripleStringMap;
 
-public class DirectOBFTableSRG extends DirectOBFTable {
+public class DirectOBFTableSRG extends DirectOBFTable implements OBFTableSRG {
     private final TripleStringMap packages = new TripleStringMap();
     private final TripleStringMap classes = new TripleStringMap();
     private final TripleStringMap fields = new TripleStringMap();
@@ -74,6 +74,32 @@ public class DirectOBFTableSRG extends DirectOBFTable {
         super.addMethod(obfName, deObfName);
         methods.addItems(obfName, seargeName, deObfName);
     }
+
+    @Override
+    public void addTypeSRG(String obfName, String seargeName, String deObfName, TargetType type) {
+        switch (type) {
+            case PACKAGE: {
+                addPackageSRG(obfName, seargeName, deObfName);
+                break;
+            }
+            case CLASS: {
+                addClassSRG(obfName, seargeName, deObfName);
+                break;
+            }
+            case FIELD: {
+                addFieldSRG(obfName, seargeName, deObfName);
+                break;
+            }
+            case METHOD: {
+                addMethodSRG(obfName, seargeName, deObfName);
+                break;
+            }
+            default: {
+                throw new IllegalArgumentException("Unknown TargetType!");
+            }
+        }
+    }
+
 
     public String getObfFromSRGPackage(String searge) {
         return packages.getFrom2(searge).getItem1();
