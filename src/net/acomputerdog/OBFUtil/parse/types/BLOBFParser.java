@@ -18,6 +18,15 @@ import java.util.regex.Pattern;
  * Formatted "METHOD:<OBF_NAME>:<OBF_DESC>:<SEARGE_NAME>:<SEARGE_DESC>:<MCP_NAME>:<MCP_DESC>"  for methods
  */
 public class BLOBFParser implements FileParser, StreamParser {
+    private final boolean stripDescs;
+
+    public BLOBFParser() {
+        this(false);
+    }
+
+    public BLOBFParser(boolean stripMethodDescriptors) {
+        this.stripDescs = stripMethodDescriptors;
+    }
 
     /**
      * Loads all entries located in a File into an OBFTable.
@@ -122,7 +131,11 @@ public class BLOBFParser implements FileParser, StreamParser {
                     throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
                 }
                 if (overwrite || !table.hasTypeObf(parts[1], type)) {
-                    table.addTypeSRG(type, parts[1] + " " + parts[2], parts[3] + " " + parts[4], parts[5] + " " + parts[6]);
+                    if (stripDescs) {
+                        table.addTypeSRG(type, parts[1], parts[3], parts[5]);
+                    } else {
+                        table.addTypeSRG(type, parts[1] + " " + parts[2], parts[3] + " " + parts[4], parts[5] + " " + parts[6]);
+                    }
                 }
             } else {
                 if (overwrite || !table.hasTypeObf(parts[1], type)) {
