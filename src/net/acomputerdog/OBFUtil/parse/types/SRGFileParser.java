@@ -14,14 +14,17 @@ import java.util.regex.Pattern;
  */
 public class SRGFileParser implements FileParser {
     private final String side;
+    private final boolean stripDescs;
 
     /**
      * Creates a new SRGFileParser
      *
      * @param side The side to read.  Should be "C" or "S" (client/server).  Unsided entries are always read, but will be saved as as this.
+     * @param stripMethodDescriptors If true, method descriptors will not be read.
      */
-    public SRGFileParser(String side) {
+    public SRGFileParser(String side, boolean stripMethodDescriptors) {
         this.side = side;
+        this.stripDescs = stripMethodDescriptors;
     }
 
     /**
@@ -50,25 +53,30 @@ public class SRGFileParser implements FileParser {
                 if (type == null) {
                     throw new FormatException("Illegal target type on line " + line + ": \"" + sections[0] + "\"");
                 }
+                String obf;
+                String deobf;
+                String side;
                 if (type == TargetType.METHOD) {
                     if (sections.length < 5) {
                         throw new FormatException("Not enough sections on line " + line + ": \"" + str + "\"");
                     }
-                    String obf = sections[1].replaceAll(Pattern.quote("/"), ".").concat(" ").concat(sections[2].replaceAll(Pattern.quote("/"), "."));
-                    String deobf = sections[3].replaceAll(Pattern.quote("/"), ".").concat(" ").concat(sections[4].replaceAll(Pattern.quote("/"), "."));
-                    String side = (sections.length >= 6) ? sections[5].replaceAll(Pattern.quote("#"), "") : "";
-
-                    if ((overwrite || !table.hasTypeDeobf(type, obf)) && (side.isEmpty() || side.equals(this.side))) {
-                        table.addType(type, obf, deobf);
+                    if (stripDescs) {
+                        obf = sections[1].replaceAll(Pattern.quote("/"), ".");
+                        deobf = sections[3].replaceAll(Pattern.quote("/"), ".");
+                    } else {
+                        obf = sections[1].replaceAll(Pattern.quote("/"), ".").concat(" ").concat(sections[2].replaceAll(Pattern.quote("/"), "."));
+                        deobf = sections[3].replaceAll(Pattern.quote("/"), ".").concat(" ").concat(sections[4].replaceAll(Pattern.quote("/"), "."));
                     }
+                    side = (sections.length >= 6) ? sections[5].replaceAll(Pattern.quote("#"), "") : "";
                 } else {
-                    String obf = sections[1].replaceAll(Pattern.quote("/"), ".");
-                    String deobf = sections[2].replaceAll(Pattern.quote("/"), ".");
-                    String side = (sections.length >= 4) ? sections[3].replaceAll(Pattern.quote("#"), "") : "";
+                    obf = sections[1].replaceAll(Pattern.quote("/"), ".");
+                    deobf = sections[2].replaceAll(Pattern.quote("/"), ".");
+                    side = (sections.length >= 4) ? sections[3].replaceAll(Pattern.quote("#"), "") : "";
 
-                    if ((overwrite || !table.hasTypeDeobf(type, obf)) && (side.isEmpty() || side.equals(this.side))) {
-                        table.addType(type, obf, deobf);
-                    }
+
+                }
+                if ((overwrite || !table.hasTypeDeobf(type, obf)) && (side.isEmpty() || side.equals(this.side))) {
+                    table.addType(type, obf, deobf);
                 }
 
             }

@@ -415,22 +415,22 @@ public class DirectOBFTable implements OBFTable {
     @Override
     public void writeToTable(OBFTable table, boolean overwrite) {
         for (String obfName : packageListObf) {
-            if (overwrite || !table.hasPackageDeobf(obfName)) {
+            if (overwrite || !table.hasPackageObf(obfName)) {
                 table.addPackage(obfName, packageMapObf.get(obfName));
             }
         }
         for (String obfName : classListObf) {
-            if (overwrite || !table.hasClassDeobf(obfName)) {
+            if (overwrite || !table.hasClassObf(obfName)) {
                 table.addClass(obfName, classMapObf.get(obfName));
             }
         }
         for (String obfName : fieldListObf) {
-            if (overwrite || !table.hasFieldDeobf(obfName)) {
+            if (overwrite || !table.hasFieldObf(obfName)) {
                 table.addField(obfName, fieldMapObf.get(obfName));
             }
         }
         for (String obfName : methodListObf) {
-            if (overwrite || !table.hasMethodDeobf(obfName)) {
+            if (overwrite || !table.hasMethodObf(obfName)) {
                 table.addMethod(obfName, methodMapObf.get(obfName));
             }
         }
