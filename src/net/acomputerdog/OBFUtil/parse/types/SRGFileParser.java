@@ -61,16 +61,16 @@ public class SRGFileParser implements FileParser {
                         throw new FormatException("Not enough sections on line " + line + ": \"" + str + "\"");
                     }
                     if (stripDescs) {
-                        obf = sections[1].replace("/", ".");
-                        deobf = sections[3].replace("/", ".");
+                        obf = sections[1].replace('/', '.');
+                        deobf = sections[3].replace('/', '.');
                     } else {
-                        obf = sections[1].replace("/", ".").concat(" ").concat(sections[2].replace("/", "."));
-                        deobf = sections[3].replace("/", ".").concat(" ").concat(sections[4].replace("/", "."));
+                        obf = sections[1].replace('/', '.').concat(" ").concat(sections[2].replace('/', '.'));
+                        deobf = sections[3].replace('/', '.').concat(" ").concat(sections[4].replace('/', '.'));
                     }
                     side = (sections.length >= 6) ? sections[5].replace("#", "") : "";
                 } else {
-                    obf = sections[1].replace("/", ".");
-                    deobf = sections[2].replace("/", ".");
+                    obf = sections[1].replace('/', '.');
+                    deobf = sections[2].replace('/', '.');
                     side = (sections.length >= 4) ? sections[3].replace("#", "") : "";
 
 
