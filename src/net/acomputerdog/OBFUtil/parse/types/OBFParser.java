@@ -2,14 +2,14 @@ package net.acomputerdog.OBFUtil.parse.types;
 
 import net.acomputerdog.OBFUtil.parse.FileParser;
 import net.acomputerdog.OBFUtil.parse.FormatException;
-import net.acomputerdog.OBFUtil.parse.URLParser;
+import net.acomputerdog.OBFUtil.parse.StreamParser;
 import net.acomputerdog.OBFUtil.table.OBFTable;
 import net.acomputerdog.OBFUtil.util.TargetType;
 import net.acomputerdog.core.file.TextFileReader;
 
 import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  *   // Comment type 2
  *   <TYPE>:<OBF>=<DEOBF>
  */
-public class OBFParser implements FileParser, URLParser {
+public class OBFParser implements FileParser, StreamParser {
     @Override
     public void loadEntries(File file, OBFTable table, boolean overwrite) throws IOException {
         if (file == null) {
@@ -53,30 +53,26 @@ public class OBFParser implements FileParser, URLParser {
     }
 
     /**
-     * Loads all entries located in a File into an OBFTable.
+     * Loads all entries located in a stream into an OBFTable.
      *
-     * @param url       The URL to load from.  Must exist.
+     * @param stream      The stream to load from.
      * @param table     The table to write to.
      * @param overwrite If true overwrite existing mappings.
      */
     @Override
-    public void loadEntries(URL url, OBFTable table, boolean overwrite) throws IOException {
-        if (url == null) {
-            throw new IllegalArgumentException("URL must not be null!");
+    public void loadEntries(InputStream stream, OBFTable table, boolean overwrite) throws IOException {
+        if (stream == null) {
+            throw new NullPointerException("Stream cannot be null!");
         }
-        URLConnection con = url.openConnection();
-        con.connect();
-        if (!con.getDoInput()) {
-            throw new IllegalArgumentException("URL does not allow reading!");
-        }
-        BufferedInputStream in = null;
+        BufferedReader in = null;
         try {
-            in = new BufferedInputStream(con.getInputStream());
-            String data = "";
-            while (in.available() > 0) {
-                data = data.concat(String.valueOf((char) in.read()));
+            in = new BufferedReader(new InputStreamReader(stream));
+            List<String> data = new ArrayList<String>();
+            String line = null;
+            while ((line = in.readLine()) != null) {
+                data.add(line);
             }
-            parseStringArray(data.split(Pattern.quote("\n")), table, overwrite);
+            parseStringArray(data.toArray(new String[data.size()]), table, overwrite);
         } finally {
             if (in != null) {
                 in.close();
@@ -85,25 +81,20 @@ public class OBFParser implements FileParser, URLParser {
     }
 
     /**
-     * Saves all entries located in an OBFTable into a file.
+     * Saves all entries located in an OBFTable into a stream.
      *
-     * @param url   The URL to write to.  Must exist.
+     * @param stream  The stream to write to.
      * @param table The table to read from
-     * @throws java.io.IOException
+     * @throws IOException
      */
     @Override
-    public void storeEntries(URL url, OBFTable table) throws IOException {
-        if (url == null) {
-            throw new IllegalArgumentException("URL must not be null!");
+    public void storeEntries(OutputStream stream, OBFTable table) throws IOException {
+        if (stream == null) {
+            throw new NullPointerException("Stream cannot be null!");
         }
-        URLConnection con = url.openConnection();
-        con.connect();
-        if (!con.getDoOutput()) {
-            throw new IllegalArgumentException("URL does not allow writing!");
-        }
-        Writer out = null;
+        BufferedWriter out = null;
         try {
-            out = new BufferedWriter(new OutputStreamWriter(con.getOutputStream()));
+            out = new BufferedWriter(new OutputStreamWriter(stream));
             writeTable(out, table);
         } finally {
             if (out != null) {

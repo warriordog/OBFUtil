@@ -49,7 +49,7 @@ public class SRGFileParser implements FileParser {
                 if (sections.length < 3) {
                     throw new FormatException("Not enough sections on line " + line + ": \"" + str + "\"");
                 }
-                TargetType type = TargetType.getType(sections[0].replaceAll(Pattern.quote(":"), ""));
+                TargetType type = TargetType.getType(sections[0].replace(":", ""));
                 if (type == null) {
                     throw new FormatException("Illegal target type on line " + line + ": \"" + sections[0] + "\"");
                 }
@@ -61,17 +61,17 @@ public class SRGFileParser implements FileParser {
                         throw new FormatException("Not enough sections on line " + line + ": \"" + str + "\"");
                     }
                     if (stripDescs) {
-                        obf = sections[1].replaceAll(Pattern.quote("/"), ".");
-                        deobf = sections[3].replaceAll(Pattern.quote("/"), ".");
+                        obf = sections[1].replace("/", ".");
+                        deobf = sections[3].replace("/", ".");
                     } else {
-                        obf = sections[1].replaceAll(Pattern.quote("/"), ".").concat(" ").concat(sections[2].replaceAll(Pattern.quote("/"), "."));
-                        deobf = sections[3].replaceAll(Pattern.quote("/"), ".").concat(" ").concat(sections[4].replaceAll(Pattern.quote("/"), "."));
+                        obf = sections[1].replace("/", ".").concat(" ").concat(sections[2].replace("/", "."));
+                        deobf = sections[3].replace("/", ".").concat(" ").concat(sections[4].replace("/", "."));
                     }
-                    side = (sections.length >= 6) ? sections[5].replaceAll(Pattern.quote("#"), "") : "";
+                    side = (sections.length >= 6) ? sections[5].replace("#", "") : "";
                 } else {
-                    obf = sections[1].replaceAll(Pattern.quote("/"), ".");
-                    deobf = sections[2].replaceAll(Pattern.quote("/"), ".");
-                    side = (sections.length >= 4) ? sections[3].replaceAll(Pattern.quote("#"), "") : "";
+                    obf = sections[1].replace("/", ".");
+                    deobf = sections[2].replace("/", ".");
+                    side = (sections.length >= 4) ? sections[3].replace("#", "") : "";
 
 
                 }
