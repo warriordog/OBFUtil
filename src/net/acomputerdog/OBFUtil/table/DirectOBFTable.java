@@ -46,7 +46,7 @@ public class DirectOBFTable implements OBFTable {
     }
 
     @Override
-    public String deobfType(TargetType type, String obfName) {
+    public String deobfType(String obfName, TargetType type) {
         switch (type) {
             case PACKAGE: {
                 return deobfPackage(obfName);
@@ -113,12 +113,12 @@ public class DirectOBFTable implements OBFTable {
     /**
      * Gets the obfuscated name of a TargetType.
      *
-     * @param type      The type of obfuscation to get.
      * @param deobfName The deobfuscated name.
+     * @param type      The type of obfuscation to get.
      * @return Return the obfuscated name, or null if the mapping is not defined.
      */
     @Override
-    public String obfType(TargetType type, String deobfName) {
+    public String obfType(String deobfName, TargetType type) {
         switch (type) {
             case PACKAGE: {
                 return obfPackage(deobfName);
@@ -167,7 +167,7 @@ public class DirectOBFTable implements OBFTable {
     }
 
     @Override
-    public void addType(TargetType type, String obfName, String deObfName) {
+    public void addType(String obfName, String deObfName, TargetType type) {
         switch (type) {
             case PACKAGE: {
                 addPackage(obfName, deObfName);
@@ -238,12 +238,12 @@ public class DirectOBFTable implements OBFTable {
     /**
      * Checks if a TargetType mapping is defined.
      *
-     * @param type    The type to check.
      * @param obfName The obfuscated name.
+     * @param type    The type to check.
      * @return Return true if the mapping is defined, false otherwise.
      */
     @Override
-    public boolean hasTypeObf(TargetType type, String obfName) {
+    public boolean hasTypeObf(String obfName, TargetType type) {
         switch (type) {
             case PACKAGE: {
                 return hasPackageObf(obfName);
@@ -284,7 +284,7 @@ public class DirectOBFTable implements OBFTable {
     }
 
     @Override
-    public boolean hasTypeDeobf(TargetType type, String deobfName) {
+    public boolean hasTypeDeobf(String deobfName, TargetType type) {
         switch (type) {
             case PACKAGE: {
                 return hasPackageDeobf(deobfName);

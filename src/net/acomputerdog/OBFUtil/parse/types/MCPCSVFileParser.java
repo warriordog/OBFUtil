@@ -40,7 +40,7 @@ public class MCPCSVFileParser extends CSVFileParser {
         for (int rowNum = 0; rowNum < csv.size(); rowNum++) {
             String[] row = csv.getRow(rowNum);
             if (ignoreSides || Integer.parseInt(row[SIDE_INDEX]) == side) {
-                table.addType(type, row[OBFNAME_INDEX], row[DEOBFNAME_INDEX]);
+                table.addType(row[OBFNAME_INDEX], row[DEOBFNAME_INDEX], type);
             }
         }
     }
@@ -52,7 +52,7 @@ public class MCPCSVFileParser extends CSVFileParser {
         String[] obfs = table.getAllTypeObf(type);
         for (String obf : obfs) {
             csv.addItem("searge", obf);
-            csv.addItem("name", table.deobfType(type, obf));
+            csv.addItem("name", table.deobfType(obf, type));
             csv.addItem("side", Integer.toString(ignoreSides ? 0 : side));
             csv.addItem("desc", "");
         }

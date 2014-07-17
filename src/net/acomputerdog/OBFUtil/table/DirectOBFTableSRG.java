@@ -30,7 +30,7 @@ public class DirectOBFTableSRG extends DirectOBFTable implements OBFTableSRG {
     }
 
     @Override
-    public void addType(TargetType type, String obfName, String deObfName) {
+    public void addType(String obfName, String deObfName, TargetType type) {
         switch (type) {
             case PACKAGE: {
                 addPackage(obfName, deObfName);
@@ -49,7 +49,7 @@ public class DirectOBFTableSRG extends DirectOBFTable implements OBFTableSRG {
                 break;
             }
             default: {
-                super.addType(type, obfName, deObfName);
+                super.addType(obfName, deObfName, type);
                 break;
             }
         }

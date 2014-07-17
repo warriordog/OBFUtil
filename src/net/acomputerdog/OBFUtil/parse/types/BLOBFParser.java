@@ -121,11 +121,11 @@ public class BLOBFParser implements FileParser, StreamParser {
                 if (parts.length < 7) {
                     throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
                 }
-                if (overwrite || !table.hasTypeObf(type, parts[1])) {
+                if (overwrite || !table.hasTypeObf(parts[1], type)) {
                     table.addTypeSRG(type, parts[1] + " " + parts[2], parts[3] + " " + parts[4], parts[5] + " " + parts[6]);
                 }
             } else {
-                if (overwrite || !table.hasTypeObf(type, parts[1])) {
+                if (overwrite || !table.hasTypeObf(parts[1], type)) {
                     table.addTypeSRG(type, parts[1], parts[2], parts[3]);
                 }
             }
@@ -151,12 +151,12 @@ public class BLOBFParser implements FileParser, StreamParser {
                 if (parts.length < 7) {
                     throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
                 }
-                if (overwrite || !table.hasTypeObf(type, parts[1])) {
-                    table.addType(type, parts[1] + " " + parts[2], parts[5] + " " + parts[6]);
+                if (overwrite || !table.hasTypeObf(parts[1], type)) {
+                    table.addType(parts[1] + " " + parts[2], parts[5] + " " + parts[6], type);
                 }
             } else {
-                if (overwrite || !table.hasTypeObf(type, parts[1])) {
-                    table.addType(type, parts[1], parts[3]);
+                if (overwrite || !table.hasTypeObf(parts[1], type)) {
+                    table.addType(parts[1], parts[3], type);
                 }
             }
         }
@@ -176,7 +176,7 @@ public class BLOBFParser implements FileParser, StreamParser {
             for (String obf : table.getAllTypeObf(type)) {
                 out.write(type.name());
                 out.write(":");
-                String deobf = table.deobfType(type, obf);
+                String deobf = table.deobfType(obf, type);
                 if (type == TargetType.METHOD) {
                     String[] obfParts = obf.split(space);
                     String obfName = obfParts[0];
@@ -210,7 +210,7 @@ public class BLOBFParser implements FileParser, StreamParser {
                 out.write(type.name());
                 out.write(":");
                 String srg = table.getSRGFromObfType(obf, type);
-                String deobf = table.deobfType(type, obf);
+                String deobf = table.deobfType(obf, type);
                 if (type == TargetType.METHOD) {
                     String[] obfParts = obf.split(space);
                     String obfName = obfParts[0];

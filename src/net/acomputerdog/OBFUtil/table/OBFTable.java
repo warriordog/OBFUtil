@@ -38,11 +38,11 @@ public interface OBFTable {
 
     /**
      * Gets the deobfuscated name of a TargetType.
-     * @param type The type of obfuscation to get.
      * @param obfName The obfuscated name.
+     * @param type The type of obfuscation to get.
      * @return Return the deobfuscated name, or null if the mapping is not defined.
      */
-    public String deobfType(TargetType type, String obfName);
+    public String deobfType(String obfName, TargetType type);
 
     /**
      * Gets the obfuscated name of a package.
@@ -79,11 +79,11 @@ public interface OBFTable {
     /**
      * Gets the obfuscated name of a TargetType.
      *
-     * @param type      The type of obfuscation to get.
      * @param deobfName The deobfuscated name.
+     * @param type      The type of obfuscation to get.
      * @return Return the obfuscated name, or null if the mapping is not defined.
      */
-    public String obfType(TargetType type, String deobfName);
+    public String obfType(String deobfName, TargetType type);
 
     /**
      * Adds an obfuscation mapping for a package.
@@ -115,11 +115,11 @@ public interface OBFTable {
 
     /**
      * Adds an obfuscation mapping for a TargetType.
-     * @param type The type to define.
      * @param obfName The obfuscated name.
      * @param deObfName The deobfuscated name.
+     * @param type The type to define.
      */
-    public void addType(TargetType type, String obfName, String deObfName);
+    public void addType(String obfName, String deObfName, TargetType type);
 
     /**
      * Checks if a package mapping is defined.
@@ -151,11 +151,11 @@ public interface OBFTable {
 
     /**
      * Checks if a TargetType mapping is defined.
-     * @param type The type to check.
      * @param obfName The obfuscated name.
+     * @param type The type to check.
      * @return Return true if the mapping is defined, false otherwise.
      */
-    public boolean hasTypeObf(TargetType type, String obfName);
+    public boolean hasTypeObf(String obfName, TargetType type);
 
     /**
      * Checks if a package mapping is defined.
@@ -192,11 +192,11 @@ public interface OBFTable {
     /**
      * Checks if a TargetType mapping is defined.
      *
-     * @param type      The type to check.
      * @param deobfName The deobfuscated name.
+     * @param type      The type to check.
      * @return Return true if the mapping is defined, false otherwise.
      */
-    public boolean hasTypeDeobf(TargetType type, String deobfName);
+    public boolean hasTypeDeobf(String deobfName, TargetType type);
 
     /**
      * Get an array of all obfuscated package names.

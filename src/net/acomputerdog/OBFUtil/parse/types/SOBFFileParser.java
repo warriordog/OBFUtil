@@ -66,8 +66,8 @@ public class SOBFFileParser implements FileParser {
                 if (obfParts.length < 2) {
                     throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
                 }
-                if ((overwrite || !table.hasTypeDeobf(type, obfParts[0])) && (side == this.side)) {
-                    table.addType(type, obfParts[0], obfParts[1]);
+                if ((overwrite || !table.hasTypeDeobf(obfParts[0], type)) && (side == this.side)) {
+                    table.addType(obfParts[0], obfParts[1], type);
                 }
             }
         } finally {
@@ -94,7 +94,7 @@ public class SOBFFileParser implements FileParser {
             out = new BufferedWriter(new FileWriter(file));
             for (TargetType type : TargetType.values()) {
                 for (String obf : table.getAllTypeObf(type)) {
-                    String deobf = table.deobfType(type, obf);
+                    String deobf = table.deobfType(obf, type);
                     out.write(type.name());
                     out.write(".");
                     out.write(this.side);
