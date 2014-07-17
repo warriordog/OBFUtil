@@ -19,7 +19,7 @@ public class SRGFileParser implements FileParser {
     /**
      * Creates a new SRGFileParser
      *
-     * @param side The side to read.  Should be "C" or "S" (client/server).  Unsided entries are always read, but will be saved as as this.
+     * @param side                   The side to read.  Should be "C" or "S" (client/server).  Unsided entries are always read, but will be saved as as this.
      * @param stripMethodDescriptors If true, method descriptors will not be read.
      */
     public SRGFileParser(String side, boolean stripMethodDescriptors) {
