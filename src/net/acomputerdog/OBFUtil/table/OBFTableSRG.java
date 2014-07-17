@@ -52,4 +52,14 @@ public interface OBFTableSRG extends OBFTable {
     public String getSRGFromDeObfMethod(String deobf);
 
     public String getSRGFromDeObfType(String deobf, TargetType type);
+
+    public boolean hasPackageSRG(String srgName);
+
+    public boolean hasClassSRG(String srgName);
+
+    public boolean hasMethodSRG(String srgName);
+
+    public boolean hasFieldSRG(String srgName);
+
+    public boolean hasTypeSRG(String srgName, TargetType type);
 }

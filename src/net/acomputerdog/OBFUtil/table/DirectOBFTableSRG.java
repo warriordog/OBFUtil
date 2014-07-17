@@ -245,6 +245,47 @@ public class DirectOBFTableSRG extends DirectOBFTable implements OBFTableSRG {
         }
     }
 
+    @Override
+    public boolean hasPackageSRG(String srgName) {
+        return packages.hasItem2(srgName);
+    }
+
+    @Override
+    public boolean hasClassSRG(String srgName) {
+        return classes.hasItem2(srgName);
+    }
+
+    @Override
+    public boolean hasMethodSRG(String srgName) {
+        return methods.hasItem2(srgName);
+    }
+
+    @Override
+    public boolean hasFieldSRG(String srgName) {
+        return fields.hasItem2(srgName);
+    }
+
+    @Override
+    public boolean hasTypeSRG(String srgName, TargetType type) {
+        switch (type) {
+            case PACKAGE: {
+                return hasPackageSRG(srgName);
+            }
+            case CLASS: {
+                return hasClassSRG(srgName);
+            }
+            case FIELD: {
+                return hasFieldSRG(srgName);
+            }
+            case METHOD: {
+                return hasMethodSRG(srgName);
+            }
+            default: {
+                throw new IllegalArgumentException("Invalid TargetType!");
+            }
+        }
+    }
+
     public void addTypeSRG(TargetType type, String obfName, String seargeName, String deObfName) {
         switch (type) {
             case PACKAGE: {
@@ -264,8 +305,7 @@ public class DirectOBFTableSRG extends DirectOBFTable implements OBFTableSRG {
                 break;
             }
             default: {
-                super.addType(type, obfName, deObfName);
-                break;
+                throw new IllegalArgumentException("Invalid TargetType!");
             }
         }
     }
