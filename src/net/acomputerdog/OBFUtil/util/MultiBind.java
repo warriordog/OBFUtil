@@ -3,6 +3,13 @@ package net.acomputerdog.OBFUtil.util;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Similar to a HashMap, but with a category->key->value mapping.
+ *
+ * @param <C> The category (1st) identifier type
+ * @param <K> The key (2nd) identifier type
+ * @param <V> The value type
+ */
 public class MultiBind<C, K, V> {
     private final Map<C, Map<K, V>> bindData = new HashMap<C, Map<K, V>>();
 

@@ -28,6 +28,12 @@ public enum TargetType {
         this.aliases = aliases;
     }
 
+    /**
+     * Gets a TargetType from it's name or an aliase
+     *
+     * @param type The name to identify with
+     * @return Return the TargetType identified by type
+     */
     public static TargetType getType(String type) {
         if (type == null) {
             return null;

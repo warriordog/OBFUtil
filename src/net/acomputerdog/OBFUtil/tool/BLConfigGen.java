@@ -13,6 +13,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+/**
+ * Creates BlazeLoader configuration files from MCP config files.
+ */
 public class BLConfigGen {
     public static void main(String[] args) throws IOException {
         if (args.length < 2) {

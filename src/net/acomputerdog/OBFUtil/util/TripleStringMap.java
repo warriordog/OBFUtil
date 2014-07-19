@@ -5,6 +5,9 @@ import net.acomputerdog.core.hash.Hash;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Maps 3 strings together so that the entire set can be retrieved by using any of the strings as a key.
+ */
 public class TripleStringMap {
 
     private final Map<String, TSMItem> item1Map = new HashMap<String, TSMItem>();
@@ -48,10 +51,13 @@ public class TripleStringMap {
         return item3Map.containsKey(item3);
     }
 
+    /**
+     * A binding of three strings
+     */
     public static class TSMItem {
-        private String item1;
-        private String item2;
-        private String item3;
+        private final String item1;
+        private final String item2;
+        private final String item3;
 
         private TSMItem(String item1, String item2, String item3) {
             this.item1 = item1;

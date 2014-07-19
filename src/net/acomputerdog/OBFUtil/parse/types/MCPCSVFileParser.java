@@ -35,6 +35,13 @@ public class MCPCSVFileParser extends CSVFileParser {
         this.ignoreSides = ignoreSides;
     }
 
+    /**
+     * Writes the data in a CSVFile to an OBFTable
+     *
+     * @param source The file where the data originated from.
+     * @param csv    The CSVFile to read from
+     * @param table  The OBFTable to write to.
+     */
     @Override
     public void writeCSVToTable(File source, CSVFile csv, OBFTable table) {
         for (int rowNum = 0; rowNum < csv.size(); rowNum++) {
@@ -45,6 +52,13 @@ public class MCPCSVFileParser extends CSVFileParser {
         }
     }
 
+    /**
+     * Creates a CSVFile representing the data in an OBFTable
+     *
+     * @param source The file where the data originated from.
+     * @param table  The table containing the data.
+     * @return Return a CSVFile representing the data in the OBFTable
+     */
     @Override
     public CSVFile readCSVFromTable(File source, OBFTable table) {
         CSVFile csv = new CSVFile();

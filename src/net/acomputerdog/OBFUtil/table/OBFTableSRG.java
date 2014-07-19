@@ -2,6 +2,9 @@ package net.acomputerdog.OBFUtil.table;
 
 import net.acomputerdog.OBFUtil.util.TargetType;
 
+/**
+ * Extension to OBFTable that adds support for a third "searge" obfuscation name.
+ */
 public interface OBFTableSRG extends OBFTable {
     public void addPackageSRG(String obfName, String seargeName, String deObfName);
 

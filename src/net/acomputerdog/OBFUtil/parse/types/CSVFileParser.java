@@ -134,6 +134,9 @@ public abstract class CSVFileParser implements FileParser {
         }
     }
 
+    /**
+     * A code structure representing a CSV file
+     */
     public static class CSVFile {
         private final Map<String, List<String>> categories = new HashMap<String, List<String>>();
         private final List<String> catNames = new ArrayList<String>();
