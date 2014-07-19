@@ -210,19 +210,19 @@ public class DirectOBFTableSRG extends DirectOBFTable implements OBFTableSRG {
     }
 
     public String getSRGFromDeObfPackage(String deobf) {
-        return packages.getFrom2(deobf).getItem3();
+        return packages.getFrom3(deobf).getItem2();
     }
 
     public String getSRGFromDeObfClass(String deobf) {
-        return classes.getFrom2(deobf).getItem3();
+        return classes.getFrom3(deobf).getItem2();
     }
 
     public String getSRGFromDeObfField(String deobf) {
-        return fields.getFrom2(deobf).getItem3();
+        return fields.getFrom3(deobf).getItem2();
     }
 
     public String getSRGFromDeObfMethod(String deobf) {
-        return methods.getFrom2(deobf).getItem3();
+        return methods.getFrom3(deobf).getItem2();
     }
 
     public String getSRGFromDeObfType(String deobf, TargetType type) {

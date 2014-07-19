@@ -193,10 +193,10 @@ public class BLOBFParser implements FileParser, StreamParser {
                 if (type == TargetType.METHOD) {
                     String[] obfParts = obf.split(space);
                     String obfName = obfParts[0];
-                    String obfDesc = obfParts[1];
+                    String obfDesc = packageToPath(obfParts[1]);
                     String[] mcpParts = deobf.split(space);
                     String mcpName = mcpParts[0];
-                    String mcpDesc = mcpParts[1];
+                    String mcpDesc = packageToPath(mcpParts[1]);
                     out.write(obfName);
                     out.write(":");
                     out.write(obfDesc);
@@ -227,13 +227,13 @@ public class BLOBFParser implements FileParser, StreamParser {
                 if (type == TargetType.METHOD) {
                     String[] obfParts = obf.split(space);
                     String obfName = obfParts[0];
-                    String obfDesc = obfParts.length >= 2 ? obfParts[1] : " ";
+                    String obfDesc = obfParts.length >= 2 ? packageToPath(obfParts[1]) : " ";
                     String[] srgParts = srg.split(space);
                     String srgName = srgParts[0];
-                    String srgDesc = srgParts.length >= 2 ? srgParts[1] : " ";
+                    String srgDesc = srgParts.length >= 2 ? packageToPath(srgParts[1]) : " ";
                     String[] mcpParts = deobf.split(space);
                     String mcpName = mcpParts[0];
-                    String mcpDesc = mcpParts.length >= 2 ? mcpParts[1] : " ";
+                    String mcpDesc = mcpParts.length >= 2 ? packageToPath(mcpParts[1]) : " ";
                     out.write(String.valueOf(obfName));
                     out.write(":");
                     out.write(String.valueOf(obfDesc));
@@ -255,6 +255,13 @@ public class BLOBFParser implements FileParser, StreamParser {
                 out.write("\n");
             }
         }
+    }
+
+    private String packageToPath(String pkg) {
+        if (pkg == null) {
+            return null;
+        }
+        return pkg.replace('.', '/');
     }
 
     private boolean isCommentLine(String str) {
