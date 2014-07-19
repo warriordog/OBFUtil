@@ -28,10 +28,7 @@ public class MultiBind<C, K, V> {
 
     public boolean keyExists(C category, K key) {
         Map<K, V> cat = getCategory(category);
-        if (cat == null) {
-            return false;
-        }
-        return cat.containsKey(key);
+        return cat != null && cat.containsKey(key);
     }
 
     private Map<K, V> getOrCreateCategory(C category) {

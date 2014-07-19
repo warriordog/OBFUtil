@@ -68,7 +68,7 @@ public class OBFParser implements FileParser, StreamParser {
         try {
             in = new BufferedReader(new InputStreamReader(stream));
             List<String> data = new ArrayList<String>();
-            String line = null;
+            String line;
             while ((line = in.readLine()) != null) {
                 data.add(line);
             }
