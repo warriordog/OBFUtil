@@ -29,15 +29,19 @@ public class BLConfigGen {
             System.exit(0);
         }
         System.out.println("Starting.");
-        FileParser srg = new SRGFileParser("C", false);
-        FileParser csvMethodClient = new MCPCSVFileParser(TargetType.METHOD, 0);
-        FileParser csvFieldClient = new MCPCSVFileParser(TargetType.FIELD, 0);
+        FileParser srgClient = new SRGFileParser("C", false);
+        FileParser csvMethodClient = new MCPCSVFileParser(TargetType.METHOD, 1);
+        FileParser csvFieldClient = new MCPCSVFileParser(TargetType.FIELD, 1);
+        FileParser csvMethodJoined = new MCPCSVFileParser(TargetType.METHOD, 2);
+        FileParser csvFieldJoined = new MCPCSVFileParser(TargetType.FIELD, 2);
         DirectOBFTableSRG client = new DirectOBFTableSRG();
         OBFTable srgTemp = new DirectOBFTable();
         OBFTable mcpTemp = new DirectOBFTable();
-        srg.loadEntries(new File(mcp, "joined.srg"), srgTemp, false);
+        srgClient.loadEntries(new File(mcp, "joined.srg"), srgTemp, false);
         csvFieldClient.loadEntries(new File(mcp, "fields.csv"), mcpTemp, true);
         csvMethodClient.loadEntries(new File(mcp, "methods.csv"), mcpTemp, true);
+        csvFieldJoined.loadEntries(new File(mcp, "fields.csv"), mcpTemp, false);
+        csvMethodJoined.loadEntries(new File(mcp, "methods.csv"), mcpTemp, false);
         addOthers(client, srgTemp);
         addSRGsMethod(client, srgTemp, mcpTemp);
         addSRGsField(client, srgTemp, mcpTemp);
