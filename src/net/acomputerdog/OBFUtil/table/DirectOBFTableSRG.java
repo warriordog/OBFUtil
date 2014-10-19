@@ -1,7 +1,7 @@
 package net.acomputerdog.OBFUtil.table;
 
 import net.acomputerdog.OBFUtil.util.TargetType;
-import net.acomputerdog.OBFUtil.util.TripleStringMap;
+import net.acomputerdog.core.storage.TripleStringMap;
 
 /**
  * OBFTable that adds support for a third "searge" obfuscation name.  Based on DirectOBFTable.
