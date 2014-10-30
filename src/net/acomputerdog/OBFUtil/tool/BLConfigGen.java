@@ -17,6 +17,9 @@ import java.util.regex.Pattern;
  * Creates BlazeLoader configuration files from MCP config files.
  */
 public class BLConfigGen {
+    private static final String PATTERN_SPACE = Pattern.quote(" ");
+    private static final String PATTERN_PERIOD = Pattern.quote(".");
+
     public static void main(String[] args) throws IOException {
         if (args.length < 2) {
             System.out.println("Use \"Convert <mcp_dir> <output_dir>\"");
@@ -48,12 +51,11 @@ public class BLConfigGen {
     }
 
     private static void addSRGsMethod(DirectOBFTableSRG dest, OBFTable sourceSRG, OBFTable sourceMCP) {
-        String regex1 = Pattern.quote(" ");
-        String regex2 = Pattern.quote(".");
+
         for (String str : sourceSRG.getAllMethodsDeobf()) {
-            String[] parts1 = str.split(regex1);
+            String[] parts1 = str.split(PATTERN_SPACE);
             if (parts1.length >= 1) {
-                String[] parts2 = parts1[0].split(regex2);
+                String[] parts2 = parts1[0].split(PATTERN_PERIOD);
                 String obf = sourceSRG.obfMethod(str);
                 String searge = parts2[parts2.length - 1];
                 String mcp = sourceMCP.deobfMethod(searge);
@@ -65,9 +67,8 @@ public class BLConfigGen {
     }
 
     private static void addSRGsField(DirectOBFTableSRG dest, OBFTable sourceSRG, OBFTable sourceMCP) {
-        String regex = Pattern.quote(".");
         for (String str : sourceSRG.getAllFieldsDeobf()) {
-            String[] parts = str.split(regex);
+            String[] parts = str.split(PATTERN_PERIOD);
             if (parts.length >= 1) {
                 String searge = parts[parts.length - 1];
                 String mcp = sourceMCP.deobfField(searge);

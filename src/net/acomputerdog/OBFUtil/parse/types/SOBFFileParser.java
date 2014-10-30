@@ -17,6 +17,10 @@ import java.util.regex.Pattern;
  * <TYPE>.<SIDE>:<OBF>=<DEOBF>
  */
 public class SOBFFileParser implements FileParser {
+    private static final String PATTERN_COLON = Pattern.quote(":");
+    private static final String PATTERN_PERIOD = Pattern.quote(".");
+    private static final String PATTERN_EQUALS = Pattern.quote("=");
+
     private final int side;
 
     /**
@@ -49,11 +53,11 @@ public class SOBFFileParser implements FileParser {
                 if (isCommentLine(str)) {
                     continue;
                 }
-                String[] typeParts = str.split(Pattern.quote(":"));
+                String[] typeParts = str.split(PATTERN_COLON);
                 if (typeParts.length < 2) {
                     throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
                 }
-                String[] sideParts = typeParts[0].split(Pattern.quote("."));
+                String[] sideParts = typeParts[0].split(PATTERN_PERIOD);
                 if (sideParts.length < 2) {
                     throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
                 }
@@ -62,7 +66,7 @@ public class SOBFFileParser implements FileParser {
                 if (type == null) {
                     throw new FormatException("Illegal target type on line " + line + ": \"" + typeParts[0] + "\"");
                 }
-                String[] obfParts = typeParts[1].split(Pattern.quote("="));
+                String[] obfParts = typeParts[1].split(PATTERN_EQUALS);
                 if (obfParts.length < 2) {
                     throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
                 }

@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
  * Reads and writes obfuscation mappings to a .csv file.  Due to variations in CSV formats, this class is abstract so that subclasses can identify the correct data to read.
  */
 public abstract class CSVFileParser implements FileParser {
+    private static final String PATTERN_COMMA = Pattern.quote(",");
 
     /**
      * Writes the data in a CSVFile to an OBFTable
@@ -56,7 +57,7 @@ public abstract class CSVFileParser implements FileParser {
             String[] categories = new String[0];
             for (String line : lines) {
                 if (!isLineEmpty(line)) {
-                    String[] items = line.split(Pattern.quote(","));
+                    String[] items = line.split(PATTERN_COMMA);
                     if (lineNum == 0) {
                         categories = items;
                         lineNum = 0;

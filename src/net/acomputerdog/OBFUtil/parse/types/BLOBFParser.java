@@ -18,6 +18,9 @@ import java.util.regex.Pattern;
  * Formatted "METHOD:<OBF_NAME>:<OBF_DESC>:<SEARGE_NAME>:<SEARGE_DESC>:<MCP_NAME>:<MCP_DESC>"  for methods
  */
 public class BLOBFParser implements FileParser, StreamParser {
+    private static final String PATTERN_COLON = Pattern.quote(":");
+    private static final String PATTERN_SPACE = Pattern.quote(" ");
+
     private final boolean stripDescs;
 
     public BLOBFParser() {
@@ -118,7 +121,7 @@ public class BLOBFParser implements FileParser, StreamParser {
             if (isCommentLine(str)) {
                 continue;
             }
-            String[] parts = str.split(Pattern.quote(":"));
+            String[] parts = str.split(PATTERN_COLON);
             if (parts.length < 4) {
                 throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
             }
@@ -152,7 +155,7 @@ public class BLOBFParser implements FileParser, StreamParser {
             if (isCommentLine(str)) {
                 continue;
             }
-            String[] parts = str.split(Pattern.quote(":"));
+            String[] parts = str.split(PATTERN_COLON);
             if (parts.length < 4) {
                 throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
             }
@@ -184,17 +187,17 @@ public class BLOBFParser implements FileParser, StreamParser {
     }
 
     private void writeTableNormal(Writer out, OBFTable table) throws IOException {
-        String space = Pattern.quote(" ");
+
         for (TargetType type : TargetType.values()) {
             for (String obf : table.getAllTypeObf(type)) {
                 out.write(type.name());
                 out.write(":");
                 String deobf = table.deobfType(obf, type);
                 if (type == TargetType.METHOD) {
-                    String[] obfParts = obf.split(space);
+                    String[] obfParts = obf.split(PATTERN_SPACE);
                     String obfName = obfParts[0];
                     String obfDesc = packageToPath(obfParts[1]);
-                    String[] mcpParts = deobf.split(space);
+                    String[] mcpParts = deobf.split(PATTERN_SPACE);
                     String mcpName = mcpParts[0];
                     String mcpDesc = packageToPath(mcpParts[1]);
                     out.write(obfName);
@@ -217,7 +220,6 @@ public class BLOBFParser implements FileParser, StreamParser {
     }
 
     private void writeTableSRG(Writer out, DirectOBFTableSRG table) throws IOException {
-        String space = Pattern.quote(" ");
         for (TargetType type : TargetType.values()) {
             for (String obf : table.getAllTypeObf(type)) {
                 out.write(type.name());
@@ -225,13 +227,13 @@ public class BLOBFParser implements FileParser, StreamParser {
                 String srg = table.getSRGFromObfType(obf, type);
                 String deobf = table.deobfType(obf, type);
                 if (type == TargetType.METHOD) {
-                    String[] obfParts = obf.split(space);
+                    String[] obfParts = obf.split(PATTERN_SPACE);
                     String obfName = obfParts[0];
                     String obfDesc = obfParts.length >= 2 ? packageToPath(obfParts[1]) : " ";
-                    String[] srgParts = srg.split(space);
+                    String[] srgParts = srg.split(PATTERN_SPACE);
                     String srgName = srgParts[0];
                     String srgDesc = srgParts.length >= 2 ? packageToPath(srgParts[1]) : " ";
-                    String[] mcpParts = deobf.split(space);
+                    String[] mcpParts = deobf.split(PATTERN_SPACE);
                     String mcpName = mcpParts[0];
                     String mcpDesc = mcpParts.length >= 2 ? packageToPath(mcpParts[1]) : " ";
                     out.write(String.valueOf(obfName));
