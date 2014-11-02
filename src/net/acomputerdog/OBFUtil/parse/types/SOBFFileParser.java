@@ -5,9 +5,9 @@ import net.acomputerdog.OBFUtil.parse.FormatException;
 import net.acomputerdog.OBFUtil.table.OBFTable;
 import net.acomputerdog.OBFUtil.util.TargetType;
 import net.acomputerdog.core.file.TextFileReader;
+import net.acomputerdog.core.java.Patterns;
 
 import java.io.*;
-import java.util.regex.Pattern;
 
 /**
  * Reads and write obfuscation data to an SOBF (Sided OBFuscation) file.  This format is an adaption of the OBF format to support sides defined in MCP files.
@@ -17,9 +17,6 @@ import java.util.regex.Pattern;
  * <TYPE>.<SIDE>:<OBF>=<DEOBF>
  */
 public class SOBFFileParser implements FileParser {
-    private static final String PATTERN_COLON = Pattern.quote(":");
-    private static final String PATTERN_PERIOD = Pattern.quote(".");
-    private static final String PATTERN_EQUALS = Pattern.quote("=");
 
     private final int side;
 
@@ -53,11 +50,11 @@ public class SOBFFileParser implements FileParser {
                 if (isCommentLine(str)) {
                     continue;
                 }
-                String[] typeParts = str.split(PATTERN_COLON);
+                String[] typeParts = str.split(Patterns.COLON);
                 if (typeParts.length < 2) {
                     throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
                 }
-                String[] sideParts = typeParts[0].split(PATTERN_PERIOD);
+                String[] sideParts = typeParts[0].split(Patterns.PERIOD);
                 if (sideParts.length < 2) {
                     throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
                 }
@@ -66,7 +63,7 @@ public class SOBFFileParser implements FileParser {
                 if (type == null) {
                     throw new FormatException("Illegal target type on line " + line + ": \"" + typeParts[0] + "\"");
                 }
-                String[] obfParts = typeParts[1].split(PATTERN_EQUALS);
+                String[] obfParts = typeParts[1].split(Patterns.EQUALS);
                 if (obfParts.length < 2) {
                     throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
                 }

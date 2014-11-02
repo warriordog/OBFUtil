@@ -5,15 +5,14 @@ import net.acomputerdog.OBFUtil.parse.FormatException;
 import net.acomputerdog.OBFUtil.table.OBFTable;
 import net.acomputerdog.OBFUtil.util.TargetType;
 import net.acomputerdog.core.file.TextFileReader;
+import net.acomputerdog.core.java.Patterns;
 
 import java.io.*;
-import java.util.regex.Pattern;
 
 /**
  * Reads and writes obfuscation data to an MCP .srg file.
  */
 public class SRGFileParser implements FileParser {
-    private static final String PATTERN_SPACE = Pattern.quote(" ");
 
     private final String side;
     private final boolean stripDescs;
@@ -47,7 +46,7 @@ public class SRGFileParser implements FileParser {
             int line = 0;
             for (String str : reader.readAllLines()) {
                 line++;
-                String[] sections = str.split(PATTERN_SPACE);
+                String[] sections = str.split(Patterns.SPACE);
                 if (sections.length < 3) {
                     throw new FormatException("Not enough sections on line " + line + ": \"" + str + "\"");
                 }

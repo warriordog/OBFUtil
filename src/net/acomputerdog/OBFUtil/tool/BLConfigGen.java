@@ -8,17 +8,15 @@ import net.acomputerdog.OBFUtil.table.DirectOBFTable;
 import net.acomputerdog.OBFUtil.table.DirectOBFTableSRG;
 import net.acomputerdog.OBFUtil.table.OBFTable;
 import net.acomputerdog.OBFUtil.util.TargetType;
+import net.acomputerdog.core.java.Patterns;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 /**
  * Creates BlazeLoader configuration files from MCP config files.
  */
 public class BLConfigGen {
-    private static final String PATTERN_SPACE = Pattern.quote(" ");
-    private static final String PATTERN_PERIOD = Pattern.quote(".");
 
     public static void main(String[] args) throws IOException {
         if (args.length < 2) {
@@ -53,9 +51,9 @@ public class BLConfigGen {
     private static void addSRGsMethod(DirectOBFTableSRG dest, OBFTable sourceSRG, OBFTable sourceMCP) {
 
         for (String str : sourceSRG.getAllMethodsDeobf()) {
-            String[] parts1 = str.split(PATTERN_SPACE);
+            String[] parts1 = str.split(Patterns.SPACE);
             if (parts1.length >= 1) {
-                String[] parts2 = parts1[0].split(PATTERN_PERIOD);
+                String[] parts2 = parts1[0].split(Patterns.PERIOD);
                 String obf = sourceSRG.obfMethod(str);
                 String searge = parts2[parts2.length - 1];
                 String mcp = sourceMCP.deobfMethod(searge);
@@ -68,7 +66,7 @@ public class BLConfigGen {
 
     private static void addSRGsField(DirectOBFTableSRG dest, OBFTable sourceSRG, OBFTable sourceMCP) {
         for (String str : sourceSRG.getAllFieldsDeobf()) {
-            String[] parts = str.split(PATTERN_PERIOD);
+            String[] parts = str.split(Patterns.PERIOD);
             if (parts.length >= 1) {
                 String searge = parts[parts.length - 1];
                 String mcp = sourceMCP.deobfField(searge);

@@ -6,11 +6,11 @@ import net.acomputerdog.OBFUtil.parse.StreamParser;
 import net.acomputerdog.OBFUtil.table.DirectOBFTableSRG;
 import net.acomputerdog.OBFUtil.table.OBFTable;
 import net.acomputerdog.OBFUtil.util.TargetType;
+import net.acomputerdog.core.java.Patterns;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * BlazeLoader OBFuscation file.
@@ -18,8 +18,6 @@ import java.util.regex.Pattern;
  * Formatted "METHOD:<OBF_NAME>:<OBF_DESC>:<SEARGE_NAME>:<SEARGE_DESC>:<MCP_NAME>:<MCP_DESC>"  for methods
  */
 public class BLOBFParser implements FileParser, StreamParser {
-    private static final String PATTERN_COLON = Pattern.quote(":");
-    private static final String PATTERN_SPACE = Pattern.quote(" ");
 
     private final boolean stripDescs;
 
@@ -121,7 +119,7 @@ public class BLOBFParser implements FileParser, StreamParser {
             if (isCommentLine(str)) {
                 continue;
             }
-            String[] parts = str.split(PATTERN_COLON);
+            String[] parts = str.split(Patterns.COLON);
             if (parts.length < 4) {
                 throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
             }
@@ -155,7 +153,7 @@ public class BLOBFParser implements FileParser, StreamParser {
             if (isCommentLine(str)) {
                 continue;
             }
-            String[] parts = str.split(PATTERN_COLON);
+            String[] parts = str.split(Patterns.COLON);
             if (parts.length < 4) {
                 throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
             }
@@ -194,10 +192,10 @@ public class BLOBFParser implements FileParser, StreamParser {
                 out.write(":");
                 String deobf = table.deobfType(obf, type);
                 if (type == TargetType.METHOD) {
-                    String[] obfParts = obf.split(PATTERN_SPACE);
+                    String[] obfParts = obf.split(Patterns.SPACE);
                     String obfName = obfParts[0];
                     String obfDesc = packageToPath(obfParts[1]);
-                    String[] mcpParts = deobf.split(PATTERN_SPACE);
+                    String[] mcpParts = deobf.split(Patterns.SPACE);
                     String mcpName = mcpParts[0];
                     String mcpDesc = packageToPath(mcpParts[1]);
                     out.write(obfName);
@@ -227,13 +225,13 @@ public class BLOBFParser implements FileParser, StreamParser {
                 String srg = table.getSRGFromObfType(obf, type);
                 String deobf = table.deobfType(obf, type);
                 if (type == TargetType.METHOD) {
-                    String[] obfParts = obf.split(PATTERN_SPACE);
+                    String[] obfParts = obf.split(Patterns.SPACE);
                     String obfName = obfParts[0];
                     String obfDesc = obfParts.length >= 2 ? packageToPath(obfParts[1]) : " ";
-                    String[] srgParts = srg.split(PATTERN_SPACE);
+                    String[] srgParts = srg.split(Patterns.SPACE);
                     String srgName = srgParts[0];
                     String srgDesc = srgParts.length >= 2 ? packageToPath(srgParts[1]) : " ";
-                    String[] mcpParts = deobf.split(PATTERN_SPACE);
+                    String[] mcpParts = deobf.split(Patterns.SPACE);
                     String mcpName = mcpParts[0];
                     String mcpDesc = mcpParts.length >= 2 ? packageToPath(mcpParts[1]) : " ";
                     out.write(String.valueOf(obfName));

@@ -6,11 +6,11 @@ import net.acomputerdog.OBFUtil.parse.StreamParser;
 import net.acomputerdog.OBFUtil.table.OBFTable;
 import net.acomputerdog.OBFUtil.util.TargetType;
 import net.acomputerdog.core.file.TextFileReader;
+import net.acomputerdog.core.java.Patterns;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * Reads and write obfuscation mappings to a .obf file.
@@ -20,8 +20,6 @@ import java.util.regex.Pattern;
  *   <TYPE>:<OBF>=<DEOBF>
  */
 public class OBFParser implements FileParser, StreamParser {
-    private static final String PATTERN_COLON = Pattern.quote(":");
-    private static final String PATTERN_EQUALS = Pattern.quote("=");
 
     @Override
     public void loadEntries(File file, OBFTable table, boolean overwrite) throws IOException {
@@ -118,7 +116,7 @@ public class OBFParser implements FileParser, StreamParser {
             if (isCommentLine(str)) {
                 continue;
             }
-            String[] typeParts = str.split(PATTERN_COLON);
+            String[] typeParts = str.split(Patterns.COLON);
             if (typeParts.length < 2) {
                 throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
             }
@@ -126,7 +124,7 @@ public class OBFParser implements FileParser, StreamParser {
             if (type == null) {
                 throw new FormatException("Illegal target type on line " + line + ": \"" + typeParts[0] + "\"");
             }
-            String[] obfParts = typeParts[1].split(PATTERN_EQUALS);
+            String[] obfParts = typeParts[1].split(Patterns.EQUALS);
             if (obfParts.length < 2) {
                 throw new FormatException("Format error on line " + line + ": \"" + str + "\"");
             }
